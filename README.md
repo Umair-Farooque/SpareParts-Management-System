@@ -33,15 +33,15 @@
 
 ## 📂 Project Structure
 
-├── main.py # Entry point
-├── login_window.py # Handles login and registration
-├── dashboard_window.py # Inventory and sales dashboard
-├── inventory_manager.py # Inventory database logic
-├── sales_manager.py # Handles sales, invoices, and storage
-├── sale_window.py # Sales history view and bill printing
-├── search_invoice.py # Search and print past invoices
-├── bill_printer.py # Generates and formats bill text
-└── autos.db # SQLite database file (auto-created)
+-├── main.py # Entry point
+-├── login_window.py # Handles login and registration
+-├── dashboard_window.py # Inventory and sales dashboard
+-├── inventory_manager.py # Inventory database logic
+-├── sales_manager.py # Handles sales, invoices, and storage
+-├── sale_window.py # Sales history view and bill printing
+-├── search_invoice.py # Search and print past invoices
+-├── bill_printer.py # Generates and formats bill text
+-└── autos.db # SQLite database file (auto-created)
 
 
 ---
@@ -51,10 +51,11 @@
 1. Make sure Python 3 is installed.
 2. Clone this repo:
    ```bash
-   git clone https://github.com/Umair-farooque/SparePartsManagementSystem.git
-   cd al-hafiz-autos
+   https://github.com/Umair-Farooque/SpareParts-Management-System.git
+   cd SpareParts-Management-System
+```bash
 python main.py
-
+```
 📌 Usage Notes
 All data is stored locally in autos.db
 
