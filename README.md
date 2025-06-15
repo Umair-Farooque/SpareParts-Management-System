@@ -54,12 +54,15 @@
 ```bash
 python main.py
 ```
+
 📌 Usage Notes
-All data is stored locally in autos.db
+```
+- All data is stored locally in autos.db
 
-Bills are saved as text and can be sent to a printer using the OS default
+- Bills are saved as text and can be sent to a printer using the OS default
 
-Each sale is recorded with a unique invoice number for tracking
+- Each sale is recorded with a unique invoice number for tracking
+```
 
 👨‍🔧 Developed By
 M. Umair Farooq
