@@ -1,4 +1,3 @@
-# SpareParts-Management-System
 # 🚗 Al-Hafiz Autos – Spare Parts Management System
 
 **Al-Hafiz Autos** is a desktop GUI application for managing auto parts inventory and generating printable bills. Built with **Python (Tkinter)** and **SQLite**, it is designed to support small businesses in managing stock, recording sales, and issuing invoices efficiently.
