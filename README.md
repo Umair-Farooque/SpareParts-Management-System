@@ -42,8 +42,7 @@
 ├── bill_printer.py       # Generates and formats bill text
 └── autos.db              # SQLite database file (auto-created)
 
-
----
+```
 
 ## 🚀 Getting Started
 
