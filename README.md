@@ -30,18 +30,18 @@
 > _Add screenshots here showing the login window, dashboard, and printed bill (optional)_
 
 ---
-
 ## 📂 Project Structure
 
--├── main.py # Entry point
--├── login_window.py # Handles login and registration
--├── dashboard_window.py # Inventory and sales dashboard
--├── inventory_manager.py # Inventory database logic
--├── sales_manager.py # Handles sales, invoices, and storage
--├── sale_window.py # Sales history view and bill printing
--├── search_invoice.py # Search and print past invoices
--├── bill_printer.py # Generates and formats bill text
--└── autos.db # SQLite database file (auto-created)
+```text
+├── main.py               # Entry point
+├── login_window.py       # Handles login and registration
+├── dashboard_window.py   # Inventory and sales dashboard
+├── inventory_manager.py  # Inventory database logic
+├── sales_manager.py      # Handles sales, invoices, and storage
+├── sale_window.py        # Sales history view and bill printing
+├── search_invoice.py     # Search and print past invoices
+├── bill_printer.py       # Generates and formats bill text
+└── autos.db              # SQLite database file (auto-created)
 
 
 ---
