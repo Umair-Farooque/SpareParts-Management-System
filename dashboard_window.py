@@ -1,4 +1,3 @@
-# dashboard_window.py
 import tkinter as tk
 from tkinter import ttk, messagebox
 from sale_window import SaleWindow
@@ -16,44 +15,96 @@ class DashboardWindow:
 
         self.win = tk.Tk()
         self.win.title("Al-Hafiz Autos - Dashboard")
-        self.win.geometry("800x500")
+        self.win.geometry("850x550")
+        self.win.configure(bg="#f5f7fa")  # light background for clean look
 
-        title_label = tk.Label(self.win, text="Al-Hafiz Autos", font=("Arial", 20, "bold"), fg="#1a237e")
-        title_label.pack(pady=10)
-
+        # --- Menu Bar ---
         self.menu_bar = tk.Menu(self.win)
+
         inventory_menu = tk.Menu(self.menu_bar, tearoff=0)
         inventory_menu.add_command(label="Add Part", command=self.add_part)
-        inventory_menu.add_command(label="Delete Part", command=self.delete_part)
         inventory_menu.add_command(label="Update Part", command=self.update_part)
+        inventory_menu.add_command(label="Delete Part", command=self.delete_part)
+        inventory_menu.add_separator()
         inventory_menu.add_command(label="Refresh", command=self.refresh_table)
+
         self.menu_bar.add_cascade(label="Inventory", menu=inventory_menu)
         self.menu_bar.add_command(label="View Sales", command=self.view_sales)
         self.menu_bar.add_command(label="Search Invoice", command=self.search_invoice)
         self.menu_bar.add_command(label="Logout", command=self.logout)
+
         self.win.config(menu=self.menu_bar)
 
-        tk.Button(self.win, text="Sell", command=lambda: SellWindow(self.inventory, self.sales, printer=self.printer, parent=self.win)).pack()
+        # Styles for ttk widgets
+        style = ttk.Style(self.win)
+        style.theme_use('clam')  # Use 'clam' or 'default' theme for more styling options
+        style.configure("Treeview.Heading", font=("Segoe UI", 11, "bold"), foreground="#1a237e")
+        style.configure("Treeview", font=("Segoe UI", 10), rowheight=25)
+        style.configure("TButton", font=("Segoe UI", 10, "bold"), padding=6)
+        style.map('TButton',
+                  background=[('active', '#1a237e')],
+                  foreground=[('active', 'white')])
 
-        # Search bar frame
-        search_frame = tk.Frame(self.win)
-        search_frame.pack(pady=5)
-        tk.Label(search_frame, text="Search by Name:").pack(side=tk.LEFT, padx=(0, 5))
+        # Title Frame
+        title_frame = tk.Frame(self.win, bg="#f5f7fa")
+        title_frame.pack(pady=15)
+
+        title_label = tk.Label(
+            title_frame, text="Al-Hafiz Autos",
+            font=("Segoe UI", 24, "bold"),
+            fg="#1a237e",
+            bg="#f5f7fa"
+        )
+        title_label.pack()
+
+        # Search Frame
+        search_frame = tk.Frame(self.win, bg="#f5f7fa")
+        search_frame.pack(pady=10, fill=tk.X, padx=20)
+
+        search_label = tk.Label(search_frame, text="Search by Name:", font=("Segoe UI", 11), bg="#f5f7fa")
+        search_label.pack(side=tk.LEFT, padx=(0, 8))
 
         self.search_var = tk.StringVar()
-        self.search_var.trace_add("write", self.on_search)  # Calls on_search whenever text changes
+        self.search_var.trace_add("write", self.on_search)
 
-        self.search_entry = tk.Entry(search_frame, textvariable=self.search_var)
-        self.search_entry.pack(side=tk.LEFT)
+        self.search_entry = ttk.Entry(search_frame, textvariable=self.search_var, width=35)
+        self.search_entry.pack(side=tk.LEFT, padx=(0, 20))
 
-        self.tree = ttk.Treeview(self.win, columns=("ID", "Name", "Company", "Purchase Rate", "Price", "Qty"), show="headings")
-        for col in ("ID", "Name", "Company", "Purchase Rate", "Price", "Qty"):
-            self.tree.heading(col, text=col)
-            self.tree.column(col, anchor="center", width=120)
+        # Sell Button Frame (right aligned)
+        sell_btn = ttk.Button(search_frame, text="Sell", command=lambda: SellWindow(self.inventory, self.sales, printer=self.printer, parent=self.win))
+        sell_btn.pack(side=tk.RIGHT)
+
+        # Treeview Frame with Scrollbar
+        tree_frame = tk.Frame(self.win)
+        tree_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=10)
+
+        self.tree = ttk.Treeview(tree_frame, columns=("ID", "Name", "Company", "Price", "Qty"), show="headings", selectmode="browse")
+        self.tree.heading("ID", text="ID")
+        self.tree.heading("Name", text="Name")
+        self.tree.heading("Company", text="Company")
+        self.tree.heading("Price", text="Price")
+        self.tree.heading("Qty", text="Qty")
+
+        self.tree.column("ID", width=60, anchor="center")
+        self.tree.column("Name", width=220, anchor="w")
+        self.tree.column("Company", width=150, anchor="w")
+        self.tree.column("Price", width=80, anchor="center")
+        self.tree.column("Qty", width=60, anchor="center")
+
+        vsb = ttk.Scrollbar(tree_frame, orient="vertical", command=self.tree.yview)
+        self.tree.configure(yscrollcommand=vsb.set)
+        vsb.pack(side=tk.RIGHT, fill=tk.Y)
         self.tree.pack(fill=tk.BOTH, expand=True)
 
-        tk.Button(self.win, text="Sell Selected", command=self.sell_selected).pack(pady=5)
+        # Sell Selected button frame
+        btn_frame = tk.Frame(self.win, bg="#f5f7fa")
+        btn_frame.pack(pady=10)
+
+        sell_selected_btn = ttk.Button(btn_frame, text="Sell Selected", command=self.sell_selected)
+        sell_selected_btn.pack()
+
         self.refresh_table()
+
         self.win.mainloop()
 
     def center_popup(self, popup):
@@ -75,7 +126,6 @@ class DashboardWindow:
         self.tree.delete(*self.tree.get_children())
 
         for row in self.inventory.get_all_parts():
-            # row format: (id, name, company, price, qty)
             if search_text in row[1].lower():
                 self.tree.insert("", "end", values=row)
 
@@ -100,8 +150,8 @@ class DashboardWindow:
         entries = {}
 
         for label in labels:
-            tk.Label(self.add_window, text=label).pack()
-            entries[label] = tk.Entry(self.add_window)
+            tk.Label(self.add_window, text=label).pack(pady=3)
+            entries[label] = ttk.Entry(self.add_window)
             entries[label].pack()
 
         def submit():
@@ -117,7 +167,7 @@ class DashboardWindow:
             except Exception as e:
                 messagebox.showerror("Error", f"Invalid input: {e}")
 
-        tk.Button(self.add_window, text="Add", command=submit).pack(pady=5)
+        ttk.Button(self.add_window, text="Add", command=submit).pack(pady=10)
 
     def delete_part(self):
         part_id = self.get_selected_part_id()
@@ -147,8 +197,8 @@ class DashboardWindow:
         entries = {}
 
         for i, label in enumerate(labels):
-            tk.Label(update_window, text=label).pack()
-            entries[label] = tk.Entry(update_window)
+            tk.Label(update_window, text=label).pack(pady=3)
+            entries[label] = ttk.Entry(update_window)
             entries[label].insert(0, part_data[i + 1])
             entries[label].pack()
 
@@ -166,7 +216,7 @@ class DashboardWindow:
             except Exception as e:
                 messagebox.showerror("Error", f"Invalid input: {e}")
 
-        tk.Button(update_window, text="Update", command=submit).pack(pady=5)
+        ttk.Button(update_window, text="Update", command=submit).pack(pady=10)
 
     def sell_selected(self):
         part_id = self.get_selected_part_id()
@@ -183,12 +233,12 @@ class DashboardWindow:
         sell_win.geometry("400x250")
         self.center_popup(sell_win)
 
-        tk.Label(sell_win, text="Customer Name").pack()
-        entry_cust = tk.Entry(sell_win)
+        tk.Label(sell_win, text="Customer Name").pack(pady=5)
+        entry_cust = ttk.Entry(sell_win)
         entry_cust.pack()
 
-        tk.Label(sell_win, text="Quantity").pack()
-        entry_qty = tk.Entry(sell_win)
+        tk.Label(sell_win, text="Quantity").pack(pady=5)
+        entry_qty = ttk.Entry(sell_win)
         entry_qty.pack()
 
         def submit():
@@ -211,7 +261,7 @@ class DashboardWindow:
             except Exception as e:
                 messagebox.showerror("Error", str(e))
 
-        tk.Button(sell_win, text="Sell", command=submit).pack(pady=5)
+        ttk.Button(sell_win, text="Sell", command=submit).pack(pady=15)
 
     def view_sales(self):
         SaleWindow(self.sales, self.printer, parent=self.win)
