@@ -12,7 +12,7 @@ class LoginWindow:
 
         self.win = tk.Tk()
         self.win.title("Login - Al-Hafiz Autos")
-        self.win.geometry("400x350")
+        self.win.geometry("600x550")
         self.win.configure(bg="#f5f7fa")
 
         self.style = ttk.Style(self.win)
