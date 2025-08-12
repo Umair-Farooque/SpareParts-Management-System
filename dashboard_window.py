@@ -46,8 +46,8 @@ class DashboardWindow:
         self.search_entry = tk.Entry(search_frame, textvariable=self.search_var)
         self.search_entry.pack(side=tk.LEFT)
 
-        self.tree = ttk.Treeview(self.win, columns=("ID", "Name", "Company", "Price", "Qty"), show="headings")
-        for col in ("ID", "Name", "Company", "Price", "Qty"):
+        self.tree = ttk.Treeview(self.win, columns=("ID", "Name", "Company", "Purchase Rate", "Price", "Qty"), show="headings")
+        for col in ("ID", "Name", "Company", "Purchase Rate", "Price", "Qty"):
             self.tree.heading(col, text=col)
             self.tree.column(col, anchor="center", width=120)
         self.tree.pack(fill=tk.BOTH, expand=True)

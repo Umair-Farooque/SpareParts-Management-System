@@ -138,6 +138,7 @@ class InventoryManager:
                 p.barcode_id,
                 p.item_name,
                 p.company,
+                p.purchase_rate,
                 p.sale_rate,
                 s.amount
             FROM products p
