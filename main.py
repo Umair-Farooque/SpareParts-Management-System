@@ -9,6 +9,8 @@ def main():
     inventory = InventoryManager()
     sales = SaleManager()
     printer = BillPrinter()
+    
+    # Pass these managers to the login window (which presumably leads to dashboard and so on)
     LoginWindow(auth, inventory, sales, printer)
 
 if __name__ == "__main__":

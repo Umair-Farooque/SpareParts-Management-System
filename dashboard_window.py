@@ -3,6 +3,8 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from sale_window import SaleWindow
 from search_invoice import InvoiceSearchWindow
+from sell_window import SellWindow
+
 
 class DashboardWindow:
     def __init__(self, auth, inventory, sales, printer, user):
@@ -31,6 +33,19 @@ class DashboardWindow:
         self.menu_bar.add_command(label="Logout", command=self.logout)
         self.win.config(menu=self.menu_bar)
 
+        tk.Button(self.win, text="Sell", command=lambda: SellWindow(self.inventory, self.sales, printer=self.printer, parent=self.win)).pack()
+
+        # Search bar frame
+        search_frame = tk.Frame(self.win)
+        search_frame.pack(pady=5)
+        tk.Label(search_frame, text="Search by Name:").pack(side=tk.LEFT, padx=(0, 5))
+
+        self.search_var = tk.StringVar()
+        self.search_var.trace_add("write", self.on_search)  # Calls on_search whenever text changes
+
+        self.search_entry = tk.Entry(search_frame, textvariable=self.search_var)
+        self.search_entry.pack(side=tk.LEFT)
+
         self.tree = ttk.Treeview(self.win, columns=("ID", "Name", "Company", "Price", "Qty"), show="headings")
         for col in ("ID", "Name", "Company", "Price", "Qty"):
             self.tree.heading(col, text=col)
@@ -54,6 +69,15 @@ class DashboardWindow:
             self.tree.delete(i)
         for row in self.inventory.get_all_parts():
             self.tree.insert("", "end", values=row)
+
+    def on_search(self, *args):
+        search_text = self.search_var.get().lower().strip()
+        self.tree.delete(*self.tree.get_children())
+
+        for row in self.inventory.get_all_parts():
+            # row format: (id, name, company, price, qty)
+            if search_text in row[1].lower():
+                self.tree.insert("", "end", values=row)
 
     def get_selected_part_id(self):
         sel = self.tree.selection()
