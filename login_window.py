@@ -36,6 +36,8 @@ class LoginWindow:
         ttk.Label(main_frame, text="Password:").pack(anchor=tk.W, pady=(0, 5))
         self.p = ttk.Entry(main_frame, font=("Segoe UI", 12), show="*")
         self.p.pack(fill=tk.X, pady=(0, 20))
+        self.p.bind("<Return>", lambda event: self.login())  # <-- Add this line here
+
 
         btn_login = ttk.Button(main_frame, text="Login", command=self.login)
         btn_login.pack(fill=tk.X, pady=5)

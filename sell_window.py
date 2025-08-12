@@ -13,7 +13,7 @@ class SellWindow:
 
         self.win = tk.Toplevel()
         self.win.title("Sell Items (Barcode Mode)")
-        self.win.geometry("700x450")
+        self.win.geometry("700x650")
         self.center_window(self.win)
 
         # Barcode entry
@@ -46,7 +46,7 @@ class SellWindow:
     def center_window(self, win):
         win.update_idletasks()
         width = 700
-        height = 450
+        height = 650
         if self.parent:
             x = self.parent.winfo_x() + (self.parent.winfo_width() // 2 - width // 2)
             y = self.parent.winfo_y() + (self.parent.winfo_height() // 2 - height // 2)

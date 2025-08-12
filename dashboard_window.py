@@ -15,8 +15,10 @@ class DashboardWindow:
 
         self.win = tk.Tk()
         self.win.title("Al-Hafiz Autos - Dashboard")
-        self.win.geometry("850x550")
+        self.win.geometry("1000x650")
         self.win.configure(bg="#f5f7fa")  # light background for clean look
+        self.win.state('zoomed')  # Maximizes window with window controls (recommended)
+
 
         # --- Menu Bar ---
         self.menu_bar = tk.Menu(self.win)
@@ -78,16 +80,19 @@ class DashboardWindow:
         tree_frame = tk.Frame(self.win)
         tree_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=10)
 
-        self.tree = ttk.Treeview(tree_frame, columns=("ID", "Name", "Company", "Price", "Qty"), show="headings", selectmode="browse")
+        self.tree = ttk.Treeview(tree_frame, columns=("ID", "Name", "Company", "Purchase Rate", "Price", "Qty"), show="headings", selectmode="browse")
         self.tree.heading("ID", text="ID")
         self.tree.heading("Name", text="Name")
         self.tree.heading("Company", text="Company")
+        self.tree.heading("Purchase Rate", text="Purchase Rate")
         self.tree.heading("Price", text="Price")
         self.tree.heading("Qty", text="Qty")
+        
 
         self.tree.column("ID", width=60, anchor="center")
         self.tree.column("Name", width=220, anchor="w")
         self.tree.column("Company", width=150, anchor="w")
+        self.tree.column("Purchase Rate", width=80, anchor="center")
         self.tree.column("Price", width=80, anchor="center")
         self.tree.column("Qty", width=60, anchor="center")
 
@@ -146,7 +151,7 @@ class DashboardWindow:
         self.add_window.geometry("400x250")
         self.center_popup(self.add_window)
 
-        labels = ["Name", "Part No", "Price", "Quantity"]
+        labels = ["Name", "Part No", "Purchase Rate", "Price", "Quantity"]
         entries = {}
 
         for label in labels:
