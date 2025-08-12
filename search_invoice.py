@@ -1,26 +1,27 @@
+# invoice_search_window.py
 import tkinter as tk
 from tkinter import messagebox
 
 class InvoiceSearchWindow:
-    def __init__(self, sales_manager, printer=None):
+    def __init__(self, sales_manager, printer=None, parent=None):
         self.sales_manager = sales_manager
         self.printer = printer
 
-        self.win = tk.Toplevel()
+        self.win = tk.Toplevel(parent) if parent else tk.Toplevel()
         self.win.title("Search Invoice")
-        self.win.geometry("400x300")
+        self.win.geometry("400x180")
         self.center_window(self.win)
 
         tk.Label(self.win, text="Enter Invoice Number").pack(pady=10)
         self.entry = tk.Entry(self.win)
-        self.entry.pack()
+        self.entry.pack(padx=10, fill="x")
 
         tk.Button(self.win, text="Search", command=self.search).pack(pady=10)
 
     def center_window(self, win):
         win.update_idletasks()
         width = 400
-        height = 300
+        height = 180
         x = win.winfo_screenwidth() // 2 - width // 2
         y = win.winfo_screenheight() // 2 - height // 2
         win.geometry(f"{width}x{height}+{x}+{y}")

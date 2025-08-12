@@ -1,3 +1,4 @@
+# sale_window.py
 import tkinter as tk
 from tkinter import ttk, messagebox
 
@@ -9,7 +10,7 @@ class SaleWindow:
 
         self.win = tk.Toplevel()
         self.win.title("Sales History")
-        self.win.geometry("400x300")
+        self.win.geometry("700x350")
         self.center_window(self.win)
 
         self.tree = ttk.Treeview(self.win, columns=("ID", "Time", "Part", "Qty", "Total", "Customer", "Invoice"), show="headings")
@@ -25,8 +26,8 @@ class SaleWindow:
 
     def center_window(self, win):
         win.update_idletasks()
-        width = 400
-        height = 300
+        width = 700
+        height = 350
         if self.parent:
             x = self.parent.winfo_x() + (self.parent.winfo_width() // 2 - width // 2)
             y = self.parent.winfo_y() + (self.parent.winfo_height() // 2 - height // 2)
@@ -36,7 +37,10 @@ class SaleWindow:
         win.geometry(f"{width}x{height}+{x}+{y}")
 
     def populate_table(self):
+        for i in self.tree.get_children():
+            self.tree.delete(i)
         for row in self.sales_manager.get_all_sales():
+            # Each row: (id, timestamp, part_name, qty, total_price, customer_name, invoice_no)
             self.tree.insert("", "end", values=row)
 
     def print_selected(self):

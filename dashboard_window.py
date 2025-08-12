@@ -31,8 +31,8 @@ class DashboardWindow:
         self.menu_bar.add_command(label="Logout", command=self.logout)
         self.win.config(menu=self.menu_bar)
 
-        self.tree = ttk.Treeview(self.win, columns=("ID", "Name", "Part No", "Price", "Qty"), show="headings")
-        for col in ("ID", "Name", "Part No", "Price", "Qty"):
+        self.tree = ttk.Treeview(self.win, columns=("ID", "Name", "Company", "Price", "Qty"), show="headings")
+        for col in ("ID", "Name", "Company", "Price", "Qty"):
             self.tree.heading(col, text=col)
             self.tree.column(col, anchor="center", width=120)
         self.tree.pack(fill=tk.BOTH, expand=True)

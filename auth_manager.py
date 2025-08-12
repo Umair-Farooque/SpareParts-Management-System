@@ -1,7 +1,7 @@
 import sqlite3
 
 class AuthManager:
-    def __init__(self, db="autos.db"):
+    def __init__(self, db="inventory.db"):
         self.db = db
         self._init_table()
 
